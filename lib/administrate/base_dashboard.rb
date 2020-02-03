@@ -63,6 +63,10 @@ module Administrate
       attribute_includes(collection_attributes)
     end
 
+    def collection_includes_without_has_many
+      attribute_includes(collection_attributes) - has_many_attributes
+    end
+
     def item_includes
       attribute_includes(show_page_attributes)
     end
@@ -77,6 +81,10 @@ module Administrate
       @association_classes ||=
         ObjectSpace.each_object(Class).
           select { |klass| klass < Administrate::Field::Associative }
+    end
+
+    def has_many_attributes
+      collection_attributes.select{|attribute| attribute_types[attribute].is_a? Administrate::Field::HasMany}
     end
 
     def attribute_includes(attributes)

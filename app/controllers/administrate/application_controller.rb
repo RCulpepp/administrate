@@ -126,7 +126,7 @@ module Administrate
     end
 
     def apply_collection_includes(relation)
-      resource_includes = dashboard.collection_includes
+      resource_includes = dashboard.collection_includes_without_has_many
       return relation if resource_includes.empty?
       relation.includes(*resource_includes)
     end
